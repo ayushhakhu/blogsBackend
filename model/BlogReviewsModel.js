@@ -20,7 +20,6 @@ const BlogReviewsModelSchema = new Schema(
 );
 
 BlogReviewsModelSchema.statics.alterReviewCommentsCount = (reviewId) => {
-  // return BlogReviewCommentsModel.find({ blogReviewId: reviewId });
   return BlogReviewCommentsModel.find({ blogReviewId: reviewId }).count();
 };
 

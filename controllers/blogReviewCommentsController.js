@@ -1,7 +1,7 @@
 const BlogReviewsCommentsModel = require("../model/BlogReviewsCommentsModel");
 const BlogReviewModel = require("../model/BlogReviewsModel");
 
-exports.fetchBlogReviewComments = async (req, res, next) => {
+const fetchBlogReviewComments = async (req, res, next) => {
   try {
     const { reviewId } = req.params;
 
@@ -15,7 +15,7 @@ exports.fetchBlogReviewComments = async (req, res, next) => {
   }
 };
 
-exports.postBlogReviewComment = async (req, res, next) => {
+const postBlogReviewComment = async (req, res, next) => {
   try {
     const { reviewId } = req.params;
     const { blogReviewComment } = req.body;
@@ -40,7 +40,7 @@ exports.postBlogReviewComment = async (req, res, next) => {
   }
 };
 
-exports.deleteReviewComment = async (req, res, next) => {
+const deleteReviewComment = async (req, res, next) => {
   try {
     const { reviewCommentId } = req.params;
 
@@ -57,7 +57,7 @@ exports.deleteReviewComment = async (req, res, next) => {
   }
 };
 
-exports.updateReviewComment = async (req, res, next) => {
+const updateReviewComment = async (req, res, next) => {
   try {
     const { reviewCommentId } = req.params;
     const { blogReviewComment } = req.body;
@@ -74,4 +74,11 @@ exports.updateReviewComment = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+module.exports = {
+  fetchBlogReviewComments,
+  postBlogReviewComment,
+  deleteReviewComment,
+  updateReviewComment,
 };

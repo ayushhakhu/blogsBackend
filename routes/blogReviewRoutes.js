@@ -1,15 +1,39 @@
 const express = require("express");
-const blogReviewsController = require("../controllers/blogReviewController");
-const isAuth = require("../middleware/isAuth");
+const {
+  fetchBlogReviews,
+  postBlogReview,
+  deleteReview,
+  updateReview,
+} = require("../controllers/blogReviewController");
+const isAuth = require("../middleware/auth/isAuth");
+
+const {
+  ValidationBlogReview,
+  createBlogReviewValidator,
+  ValidationBlogReviewUpdate,
+  updateBlogReviewValidator,
+} = require("../middleware/validators/blogReviewValidators");
 
 const router = express.Router();
 
-router.get("/:blogId", blogReviewsController.fetchBlogReviews);
+router.get("/:blogId", fetchBlogReviews);
 
-router.post("/:blogId", isAuth, blogReviewsController.postBlogReview);
+router.post(
+  "/:blogId",
+  isAuth,
+  createBlogReviewValidator(),
+  ValidationBlogReview,
+  postBlogReview
+);
 
-router.delete("/:reviewId", isAuth, blogReviewsController.deleteReview);
+router.delete("/:reviewId", isAuth, deleteReview);
 
-router.put("/:reviewId", isAuth, blogReviewsController.updateReview);
+router.put(
+  "/:reviewId",
+  isAuth,
+  updateBlogReviewValidator(),
+  ValidationBlogReviewUpdate,
+  updateReview
+);
 
 module.exports = router;

@@ -27,7 +27,7 @@ app.use("/auth", userRoutes);
 
 app.use((err, req, res, next) => {
   console.log("Error Handler Layer to catch all errors");
-  res.status(500).send(`Something broke - ${err}`);
+  res.status(500).json(`${err}`);
 });
 
 mongoose

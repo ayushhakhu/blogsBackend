@@ -2,13 +2,34 @@ const express = require("express");
 
 const router = express.Router();
 
-const userController = require("../controllers/userController");
-const isAuth = require("../middleware/isAuth");
+const {
+  signup,
+  login,
+  getBlogsCount,
+} = require("../controllers/userController");
 
-router.post("/signup", userController.signup);
+const isAuth = require("../middleware/auth/isAuth");
 
-router.post("/login", userController.login);
+const {
+  useSignUpValidationRules,
+  validateUserSignUp,
+} = require("../middleware/validators/userValidators");
 
-router.get("/count", isAuth, userController.getBlogsCount);
+const {
+  userSignupSanitizers,
+  userLoginSanitizers,
+} = require("../middleware/sanitizers/userSanitizers");
+
+router.post(
+  "/signup",
+  useSignUpValidationRules(),
+  userSignupSanitizers(),
+  validateUserSignUp,
+  signup
+);
+
+router.get("/login", userLoginSanitizers(), login);
+
+router.get("/count", isAuth, getBlogsCount);
 
 module.exports = router;

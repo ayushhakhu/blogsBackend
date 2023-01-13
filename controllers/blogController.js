@@ -5,7 +5,7 @@ const UserModel = require("../model/UserModel");
 
 const LIMIT = 10;
 
-exports.fetchAllBlogs = async (req, res, next) => {
+const fetchAllBlogs = async (req, res, next) => {
   try {
     const { page } = req.query;
 
@@ -19,7 +19,7 @@ exports.fetchAllBlogs = async (req, res, next) => {
   }
 };
 
-exports.createBlog = async (req, res, next) => {
+const createBlog = async (req, res, next) => {
   const { username } = req;
 
   try {
@@ -45,7 +45,7 @@ exports.createBlog = async (req, res, next) => {
   }
 };
 
-exports.deleteBlog = async (req, res, next) => {
+const deleteBlog = async (req, res, next) => {
   try {
     const { blogId } = req.params;
 
@@ -75,7 +75,7 @@ exports.deleteBlog = async (req, res, next) => {
   }
 };
 
-exports.updateBlog = async (req, res, next) => {
+const updateBlog = async (req, res, next) => {
   try {
     const { blogId } = req.params;
     const { blogTitle, blogDetails, blogCategory } = req.body;
@@ -85,11 +85,18 @@ exports.updateBlog = async (req, res, next) => {
       { blogTitle, blogDetails, blogCategory }
     );
     if (!result) {
-      throw new Error("No Such id exists");
+      throw new Error("No Such Blog exists");
     } else {
       await res.status(200).json({ message: "Updated Blog" });
     }
   } catch (err) {
     next(err);
   }
+};
+
+module.exports = {
+  fetchAllBlogs,
+  createBlog,
+  deleteBlog,
+  updateBlog,
 };

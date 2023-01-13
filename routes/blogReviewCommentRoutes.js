@@ -2,27 +2,39 @@ const express = require("express");
 
 const router = express.Router();
 
-const isAuth = require("../middleware/isAuth");
-const blogReviewCommentController = require("../controllers/blogReviewCommentsController");
+const isAuth = require("../middleware/auth/isAuth");
+const {
+  fetchBlogReviewComments,
+  postBlogReviewComment,
+  deleteReviewComment,
+  updateReviewComment,
+} = require("../controllers/blogReviewCommentsController");
 
-router.get("/:reviewId", blogReviewCommentController.fetchBlogReviewComments);
+const {
+  createBlogReviewCommentValidator,
+  ValidationBlogReviewComment,
+  updateBlogReviewCommentValidator,
+  ValidationBlogReviewCommentUpdate,
+} = require("../middleware/validators/blogReviewCommentsValidators");
+
+router.get("/:reviewId", fetchBlogReviewComments);
 
 router.post(
   "/:reviewId",
   isAuth,
-  blogReviewCommentController.postBlogReviewComment
+  createBlogReviewCommentValidator(),
+  ValidationBlogReviewComment,
+  postBlogReviewComment
 );
 
-router.delete(
-  "/:reviewCommentId",
-  isAuth,
-  blogReviewCommentController.deleteReviewComment
-);
+router.delete("/:reviewCommentId", isAuth, deleteReviewComment);
 
 router.put(
   "/:reviewCommentId",
   isAuth,
-  blogReviewCommentController.updateReviewComment
+  updateBlogReviewCommentValidator(),
+  ValidationBlogReviewCommentUpdate,
+  updateReviewComment
 );
 
 module.exports = router;

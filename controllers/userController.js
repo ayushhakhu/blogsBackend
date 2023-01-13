@@ -2,7 +2,7 @@ const UserModel = require("../model/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-exports.login = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
@@ -34,7 +34,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.signup = async (req, res, next) => {
+const signup = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
@@ -54,7 +54,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.getBlogsCount = async (req, res, next) => {
+const getBlogsCount = async (req, res, next) => {
   try {
     const { username } = req;
     const foundUser = await UserModel.findOne({ username: username });
@@ -63,4 +63,10 @@ exports.getBlogsCount = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+module.exports = {
+  login,
+  signup,
+  getBlogsCount,
 };

@@ -3,7 +3,7 @@ const BlogReviewsCommentsModel = require("../model/BlogReviewsCommentsModel");
 
 const LIMIT = 10;
 
-exports.fetchBlogReviews = async (req, res, next) => {
+const fetchBlogReviews = async (req, res, next) => {
   try {
     const { blogId } = req.params;
     const { page } = req.query;
@@ -19,7 +19,7 @@ exports.fetchBlogReviews = async (req, res, next) => {
   }
 };
 
-exports.postBlogReview = async (req, res, next) => {
+const postBlogReview = async (req, res, next) => {
   try {
     const { blogId } = req.params;
     const { blogReview } = req.body;
@@ -38,7 +38,7 @@ exports.postBlogReview = async (req, res, next) => {
   }
 };
 
-exports.deleteReview = async (req, res, next) => {
+const deleteReview = async (req, res, next) => {
   try {
     const { reviewId } = req.params;
 
@@ -58,7 +58,7 @@ exports.deleteReview = async (req, res, next) => {
   }
 };
 
-exports.updateReview = async (req, res, next) => {
+const updateReview = async (req, res, next) => {
   try {
     const { reviewId } = req.params;
     const { blogReview } = req.body;
@@ -75,4 +75,11 @@ exports.updateReview = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+module.exports = {
+  updateReview,
+  deleteReview,
+  postBlogReview,
+  fetchBlogReviews,
 };
