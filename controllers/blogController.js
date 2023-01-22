@@ -10,6 +10,7 @@ const fetchAllBlogs = async (req, res, next) => {
     const { page } = req.query;
 
     const blogs = await BlogModel.find({})
+      .populate({ path: "blogAuthor", select: "username -_id" })
       .limit(LIMIT)
       .skip((page - 1) * LIMIT);
 
@@ -94,9 +95,27 @@ const updateBlog = async (req, res, next) => {
   }
 };
 
+const getBlog = async (req, res, next) => {
+  try {
+    const { blogId } = req.params;
+
+    const result = await BlogModel.findById({
+      _id: blogId,
+    }).populate({ path: "blogAuthor", select: "username -_id" });
+    if (!result) {
+      throw new Error("No Such Blog Exists");
+    } else {
+      await res.status(200).json(result);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   fetchAllBlogs,
   createBlog,
   deleteBlog,
   updateBlog,
+  getBlog,
 };

@@ -4,6 +4,7 @@ const {
   createBlog,
   deleteBlog,
   updateBlog,
+  getBlog,
 } = require("../controllers/blogController");
 const isAuth = require("../middleware/auth/isAuth");
 
@@ -33,6 +34,8 @@ router.post(
 );
 
 router.delete("/:blogId", isAuth, deleteBlog);
+
+router.get("/:blogId", getBlog);
 
 router.put(
   "/:blogId",

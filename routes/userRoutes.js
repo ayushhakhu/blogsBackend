@@ -28,7 +28,7 @@ router.post(
   signup
 );
 
-router.get("/login", userLoginSanitizers(), login);
+router.post("/login", userLoginSanitizers(), login);
 
 router.get("/count", isAuth, getBlogsCount);
 

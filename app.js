@@ -11,7 +11,7 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:8000",
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
@@ -34,5 +34,5 @@ mongoose
   .connect(
     "mongodb+srv://test:yJMyEQ9XOS7Xck6l@cluster0.1aacova.mongodb.net/Blogs"
   )
-  .then((m) => app.listen(3000))
+  .then((m) => app.listen(8000))
   .catch((err) => console.log("Unable to connect to Db"));

@@ -26,9 +26,11 @@ const login = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    await res
-      .status(201)
-      .json({ message: "Successfully logged in", token: token });
+    await res.status(201).json({
+      message: "Successfully logged in",
+      token: token,
+      username: username,
+    });
   } catch (err) {
     next(err);
   }
