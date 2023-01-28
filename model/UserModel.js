@@ -13,6 +13,14 @@ const UserModelSchema = new Schema(
     noOfBlogs: {
       type: SchemaTypes.Number,
     },
+    firstName: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+    lastName: {
+      type: SchemaTypes.String,
+      required: true,
+    },
   },
   {
     versionKey: false,

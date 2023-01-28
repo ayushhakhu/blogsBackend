@@ -1,5 +1,6 @@
 const BlogReviewModel = require("../model/BlogReviewsModel");
 const BlogReviewsCommentsModel = require("../model/BlogReviewsCommentsModel");
+const UserModel = require("../model/UserModel");
 
 const LIMIT = 10;
 
@@ -9,6 +10,10 @@ const fetchBlogReviews = async (req, res, next) => {
     const { page } = req.query;
 
     const blogReviews = await BlogReviewModel.find({ blogId: blogId })
+      .populate({
+        path: "user",
+        select: "firstName lastName -_id",
+      })
       .select(["-blogId"])
       .limit(LIMIT)
       .skip((page - 1) * LIMIT);
@@ -23,11 +28,15 @@ const postBlogReview = async (req, res, next) => {
   try {
     const { blogId } = req.params;
     const { blogReview } = req.body;
+    const username = req.username;
+
+    const userId = await UserModel.findOne({ username: username });
 
     const blogReviews = new BlogReviewModel({
       blogReview: blogReview,
       blogId: blogId,
       reviewCommentsCount: 0,
+      user: userId,
     });
 
     await blogReviews.save();

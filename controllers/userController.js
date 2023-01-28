@@ -38,7 +38,7 @@ const login = async (req, res, next) => {
 
 const signup = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, firstName, lastName } = req.body;
 
     const cryptedPassword = await bcrypt.hash(password, 12);
 
@@ -46,6 +46,8 @@ const signup = async (req, res, next) => {
       username: username,
       password: cryptedPassword,
       noOfBlogs: 0,
+      firstName: firstName,
+      lastName: lastName,
     });
 
     await newUser.save();

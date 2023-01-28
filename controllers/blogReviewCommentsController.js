@@ -1,5 +1,6 @@
 const BlogReviewsCommentsModel = require("../model/BlogReviewsCommentsModel");
 const BlogReviewModel = require("../model/BlogReviewsModel");
+const UserModel = require("../model/UserModel");
 
 const fetchBlogReviewComments = async (req, res, next) => {
   try {
@@ -7,7 +8,12 @@ const fetchBlogReviewComments = async (req, res, next) => {
 
     const blogReviewComments = await BlogReviewsCommentsModel.find({
       blogReviewId: reviewId,
-    }).select(["-blogReviewId"]);
+    })
+      .populate({
+        path: "user",
+        select: "firstName lastName -_id",
+      })
+      .select(["-blogReviewId"]);
 
     await res.status(201).json(blogReviewComments);
   } catch (err) {
@@ -20,9 +26,14 @@ const postBlogReviewComment = async (req, res, next) => {
     const { reviewId } = req.params;
     const { blogReviewComment } = req.body;
 
+    const username = req.username;
+
+    const userId = await UserModel.findOne({ username: username });
+
     const blogReviewComments = new BlogReviewsCommentsModel({
       blogReviewComment: blogReviewComment,
       blogReviewId: reviewId,
+      user: userId,
     });
 
     await blogReviewComments.save();

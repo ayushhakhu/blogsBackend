@@ -9,6 +9,10 @@ const BlogReviewsCommentsModelSchema = new Schema(
       type: SchemaTypes.ObjectId,
       ref: "BlogReviews",
     },
+    user: {
+      type: SchemaTypes.ObjectId,
+      ref: "User",
+    },
   },
   {
     versionKey: false,

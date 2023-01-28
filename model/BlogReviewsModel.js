@@ -13,6 +13,10 @@ const BlogReviewsModelSchema = new Schema(
     reviewCommentsCount: {
       type: SchemaTypes.Number,
     },
+    user: {
+      type: SchemaTypes.ObjectId,
+      ref: "User",
+    },
   },
   {
     versionKey: false,

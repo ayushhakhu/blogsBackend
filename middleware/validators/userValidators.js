@@ -20,6 +20,8 @@ const useSignUpValidationRules = () => {
       .withMessage(
         "Password should contain Capital , Numbers and Special Chars "
       ),
+    body("firstName").notEmpty().withMessage("First Name is required "),
+    body("lastName").notEmpty().withMessage("Last Name is required"),
   ];
 };
 
