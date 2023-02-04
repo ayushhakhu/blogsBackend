@@ -11,7 +11,7 @@ const fetchBlogReviewComments = async (req, res, next) => {
     })
       .populate({
         path: "user",
-        select: "firstName lastName -_id",
+        select: "username firstName lastName -_id",
       })
       .select(["-blogReviewId"]);
 

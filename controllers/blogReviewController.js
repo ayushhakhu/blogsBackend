@@ -12,7 +12,7 @@ const fetchBlogReviews = async (req, res, next) => {
     const blogReviews = await BlogReviewModel.find({ blogId: blogId })
       .populate({
         path: "user",
-        select: "firstName lastName -_id",
+        select: "username firstName lastName -_id",
       })
       .select(["-blogId"])
       .limit(LIMIT)
