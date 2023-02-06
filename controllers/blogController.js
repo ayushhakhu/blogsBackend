@@ -1,3 +1,4 @@
+const { default: mongoose, SchemaTypes } = require("mongoose");
 const BlogModel = require("../model/BlogModel");
 const BlogReviewCommentsModel = require("../model/BlogReviewsCommentsModel");
 const BlogReviews = require("../model/BlogReviewsModel");
@@ -115,10 +116,58 @@ const getBlog = async (req, res, next) => {
   }
 };
 
+const getUserBlogs = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const { page } = req.query;
+
+    const userDetails = await UserModel.findOne({ username: username });
+
+    const userId = await userDetails._id;
+
+    const blogs = await BlogModel.find({
+      blogAuthor: userId,
+    })
+      .populate({
+        path: "blogAuthor",
+        select: "username firstName lastName -_id",
+      })
+      .limit(LIMIT)
+      .skip((page - 1) * LIMIT);
+
+    await res.status(200).json(blogs);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getCategoryWiseBlogs = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const { page } = req.query;
+
+    const blogs = await BlogModel.find({
+      blogCategory: category,
+    })
+      .populate({
+        path: "blogAuthor",
+        select: "username firstName lastName -_id",
+      })
+      .limit(LIMIT)
+      .skip((page - 1) * LIMIT);
+
+    await res.status(200).json(blogs);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   fetchAllBlogs,
   createBlog,
   deleteBlog,
   updateBlog,
   getBlog,
+  getUserBlogs,
+  getCategoryWiseBlogs,
 };
