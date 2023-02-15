@@ -21,6 +21,16 @@ const fetchAllBlogs = async (req, res, next) => {
   }
 };
 
+const fetchBlogsCount = async (req, res, next) => {
+  try {
+    const blogsCount = await BlogModel.find({}).count();
+
+    await res.status(200).json({"blogs":blogsCount});
+  } catch (err) {
+    next(err);
+  }
+};
+
 const createBlog = async (req, res, next) => {
   const { username } = req;
 
@@ -165,6 +175,7 @@ const getCategoryWiseBlogs = async (req, res, next) => {
 module.exports = {
   fetchAllBlogs,
   createBlog,
+  fetchBlogsCount,
   deleteBlog,
   updateBlog,
   getBlog,

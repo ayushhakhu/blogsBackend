@@ -5,6 +5,7 @@ const {
   deleteBlog,
   updateBlog,
   getBlog,
+  fetchBlogsCount,
 } = require("../controllers/blogController");
 const isAuth = require("../middleware/auth/isAuth");
 
@@ -23,6 +24,8 @@ const {
 const router = express.Router();
 
 router.get("/", fetchAllBlogs);
+
+router.get("/count", fetchBlogsCount);
 
 router.post(
   "/",
