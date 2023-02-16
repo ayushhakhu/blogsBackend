@@ -114,7 +114,7 @@ const getBlog = async (req, res, next) => {
       _id: blogId,
     }).populate({
       path: "blogAuthor",
-      select: "username firstName lastName -_id",
+      select: "username firstName lastName noOfBlogs -_id",
     });
     if (!result) {
       throw new Error("No Such Blog Exists");
