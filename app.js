@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://test:yJMyEQ9XOS7Xck6l@cluster0.1aacova.mongodb.net/Blogs"
+    "mongodb+srv://your-own"
   )
   .then((m) => app.listen(8000))
   .catch((err) => console.log("Unable to connect to Db"));
